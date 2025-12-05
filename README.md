@@ -32,17 +32,16 @@ Kokkalis Global Search provides fast, discreet, and expert staffing solutions fo
 ## Technical Details
 
 - Pure HTML/CSS/JavaScript (no frameworks or build tools)
-- Self-contained single file (`index.html`)
 - Google Fonts (Inter)
 - Mobile-first responsive design
-- No external dependencies
+- No external dependencies (except images for now)
 
 ## Contact
 
 **Kokkalis Global Search**  
 Boston, MA — USA  
-Phone: (617) 555-1010  
-Email: info@kokkalisglobal.com
+Phone: (617) 851-4332  
+Email: kokkalisgs@gmail.com
 
 ---
 
