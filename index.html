@@ -1,0 +1,198 @@
+<!-- File: index.html -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Kokkalis Global Search — Recruiting & Talent</title>
+    <meta name="description" content="Recruiting-as-a-Service. Executive search, talent acquisition, and contingent staffing." />
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <!-- Link to CSS -->
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="#">Kokkalis Global Search</a>
+
+        <nav class="main-nav" id="main-nav">
+          <a href="#services">Services</a>
+          <a href="#jobs">Jobs</a>
+          <a href="#about">About</a>
+          <a href="#contact" class="button button-outline">Contact</a>
+        </nav>
+
+        <button id="menu-toggle" class="menu-toggle" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero - full-bleed, bold type like phpagency -->
+      <section class="hero hero--large">
+        <div class="hero-media-bg" aria-hidden="true"></div>
+        <div class="container hero-inner">
+          <div class="hero-content">
+            <h1>Recruiting built for high-growth product teams</h1>
+            <p class="lead">We source and place senior engineering, product, and leadership talent — quickly, discreetly, and with exceptional fit.</p>
+
+            <div class="hero-ctas">
+              <a class="button button-primary" href="#contact">Get started</a>
+              <a class="button button-ghost" href="#jobs">View roles</a>
+            </div>
+
+            <div class="trusted-logos" aria-hidden="true">
+              <img src="https://www.svgrepo.com/show/508402/apple-pay.svg" alt="Client logo" />
+              <img src="https://www.svgrepo.com/show/508403/amex.svg" alt="Client logo" />
+              <img src="https://www.svgrepo.com/show/508411/bitpay.svg" alt="Client logo" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services (card grid with bold headings) -->
+      <section id="services" class="section services">
+        <div class="container">
+          <h2 class="section-title">What we do</h2>
+          <div class="grid grid-3">
+            <article class="service-card">
+              <h3>Executive Search</h3>
+              <p>Confidential C-suite and leadership searches with targeted outreach and assessment.</p>
+            </article>
+            <article class="service-card">
+              <h3>Permanent Hiring</h3>
+              <p>End-to-end hiring for engineering, product and GTM roles — sourcing, screening, and offer support.</p>
+            </article>
+            <article class="service-card">
+              <h3>Contract & Interim</h3>
+              <p>Senior contractors and interim leaders for critical short-term needs.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Featured roles (wide list like phpagency) -->
+      <section id="jobs" class="section jobs section--wide">
+        <div class="container">
+          <div class="jobs-header">
+            <h2 class="section-title">Featured roles</h2>
+            <div class="jobs-actions">
+              <label class="select">
+                <select id="filter-role">
+                  <option value="all">All</option>
+                  <option value="engineering">Engineering</option>
+                  <option value="product">Product</option>
+                  <option value="sales">Sales</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div class="job-list" id="job-list">
+            <article class="job-row" data-role="engineering">
+              <div class="job-left">
+                <h3>Senior Cloud Security Engineer</h3>
+                <p class="muted">Remote — Full-time</p>
+              </div>
+              <div class="job-right">
+                <a href="#" class="button button-outline small">Apply</a>
+              </div>
+            </article>
+
+            <article class="job-row" data-role="product">
+              <div class="job-left">
+                <h3>Product Manager — Data Platform</h3>
+                <p class="muted">New York, NY — Full-time</p>
+              </div>
+              <div class="job-right">
+                <a href="#" class="button button-outline small">Apply</a>
+              </div>
+            </article>
+
+            <article class="job-row" data-role="engineering">
+              <div class="job-left">
+                <h3>Platform / DevOps Engineer</h3>
+                <p class="muted">Remote — Full-time</p>
+              </div>
+              <div class="job-right">
+                <a href="#" class="button button-outline small">Apply</a>
+              </div>
+            </article>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- About (two-column with bold facts) -->
+      <section id="about" class="section about">
+        <div class="container about-inner">
+          <div class="about-copy">
+            <h2 class="section-title">About Kokkalis Global Search</h2>
+            <p>We combine executive recruiting discipline with modern sourcing technology. Our specialty is senior technical hires at Series B–D companies.</p>
+
+            <div class="stats">
+              <div><strong>10+</strong><span>years</span></div>
+              <div><strong>500+</strong><span>hires</span></div>
+              <div><strong>90%</strong><span>retention</span></div>
+            </div>
+          </div>
+
+          <div class="about-media" aria-hidden="true">
+            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Team" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section id="contact" class="section contact">
+        <div class="container contact-inner">
+          <div class="contact-copy">
+            <h2 class="section-title">Start a search</h2>
+            <p>Tell us about the role and timeline — we’ll get back to you within one business day.</p>
+
+            <form id="contact-form" class="contact-form" autocomplete="on">
+              <div class="form-row">
+                <input type="text" name="name" placeholder="Your name" required />
+                <input type="email" name="email" placeholder="Email" required />
+              </div>
+              <input type="text" name="company" placeholder="Company" />
+              <select name="interest">
+                <option>Hiring</option>
+                <option>Applying for a role</option>
+                <option>General inquiry</option>
+              </select>
+              <textarea name="message" rows="5" placeholder="Tell us about the role or your question..." required></textarea>
+              <button class="button button-primary" type="submit">Send message</button>
+            </form>
+          </div>
+
+          <aside class="contact-aside">
+            <h3>Contact</h3>
+            <p><strong>Email:</strong> kokkalisgs@gmail.com</p>
+            <p><strong>Phone:</strong> (617) 851-4332</p>
+            <p><strong>Location:</strong> Boston, MA</p>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>© <span id="year"></span> Kokkalis Global Search — All rights reserved.</p>
+        <nav class="footer-nav">
+          <a href="#privacy">Privacy</a>
+          <a href="#terms">Terms</a>
+        </nav>
+      </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+  </body>
+</html>

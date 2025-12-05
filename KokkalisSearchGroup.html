@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kokkalis Global Search — Recruiting & Staffing</title>
+
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#ffffff;
+      --primary:#0f4c81;
+      --accent:#0aa775;
+      --muted:#6b7280;
+      --card:#f8fafc;
+      --max-width:1100px;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:#111827;
+      -webkit-font-smoothing:antialiased;
+      line-height:1.45;
+      padding-bottom:60px;
+    }
+
+    .container{
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:24px;
+    }
+
+    header{
+      border-bottom:1px solid #e6e9ee;
+      background:linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.95));
+      position:sticky;
+      top:0;
+      z-index:40;
+      backdrop-filter: blur(6px);
+    }
+    .nav{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      justify-content:space-between;
+      padding:14px 0;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      text-decoration:none;
+      color:inherit;
+    }
+    .logo{
+      width:44px;height:44px;border-radius:8px;background:var(--primary);
+      display:flex;align-items:center;justify-content:center;color:white;font-weight:700;
+      font-size:18px;
+    }
+    nav ul{display:flex;gap:18px;list-style:none;margin:0;padding:0;align-items:center}
+    nav a{color:var(--muted);text-decoration:none;font-weight:600;font-size:15px}
+    .cta{
+      background:var(--accent);
+      color:white;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:700;
+      box-shadow:0 4px 14px rgba(10,167,117,0.15);
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns:1fr 420px;
+      gap:28px;
+      align-items:center;
+      padding:36px 0 56px;
+    }
+    .hero h1{
+      font-size:34px;margin:0 0 12px;line-height:1.05;
+      color:var(--primary);
+    }
+    .hero p{margin:0 0 18px;color:var(--muted);font-size:16px;max-width:55ch}
+    .hero .actions{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{
+      display:inline-block;padding:12px 16px;border-radius:10px;text-decoration:none;font-weight:700;
+    }
+    .btn-primary{background:var(--primary);color:white}
+    .btn-outline{border:2px solid var(--primary);color:var(--primary);background:transparent}
+
+    .hero-card{
+      background:linear-gradient(180deg, #ffffff, var(--card));
+      border-radius:14px;padding:18px;border:1px solid #e6edf4;
+      box-shadow:0 8px 30px rgba(14,38,71,0.06);
+    }
+    .small-muted{color:var(--muted);font-weight:600;font-size:13px;margin-bottom:8px}
+    .phone{font-size:20px;font-weight:700;color:var(--primary)}
+    .badge{display:inline-block;padding:6px 10px;background:#effaf4;border-radius:20px;font-weight:700;color:var(--accent);font-size:13px;margin-top:8px}
+
+    .values{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+      margin-top:18px;
+    }
+    .card{
+      background:white;border-radius:10px;padding:16px;border:1px solid #eef2f6;
+      box-shadow:0 6px 18px rgba(13,30,60,0.03);
+    }
+    .card h3{margin:0 0 8px;font-size:16px;color:var(--primary)}
+    .card p{margin:0;color:var(--muted);font-size:14px}
+
+    .specialties{margin-top:28px;display:flex;flex-wrap:wrap;gap:12px}
+    .chip{padding:8px 12px;border-radius:999px;background:#f1f5f9;font-weight:600;color:var(--primary);font-size:14px;border:1px solid #e6eef6}
+
+    .section{padding:44px 0;border-top:1px solid #f1f5f8}
+    .section h2{font-size:22px;margin:0 0 12px;color:var(--primary)}
+    .section p.lead{color:var(--muted);margin:0 0 18px}
+
+    .testimonials{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    blockquote{background:#fbfdff;border-left:4px solid #dff3ef;padding:16px;border-radius:8px;margin:0;color:var(--muted)}
+    .test-author{font-weight:700;color:var(--primary);margin-top:8px;font-size:14px}
+
+    .contact-grid{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
+    label{display:block;font-weight:700;margin-bottom:6px;font-size:13px}
+    input,textarea{
+      width:100%;padding:10px;border-radius:8px;border:1px solid #e6eef6;font-size:14px;
+    }
+    textarea{min-height:120px;resize:vertical}
+    .form-help{font-size:13px;color:var(--muted);margin-top:8px}
+
+    footer{margin-top:28px;border-top:1px solid #eef2f6;padding-top:18px;color:var(--muted);font-size:14px}
+
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr; padding-bottom:28px}
+      .values{grid-template-columns:repeat(2,1fr)}
+      .testimonials{grid-template-columns:1fr}
+      .contact-grid{grid-template-columns:1fr}
+      nav ul{display:none}
+    }
+
+    @media (max-width:560px){
+      .values{grid-template-columns:1fr}
+      header{padding:0 8px}
+      .hero h1{font-size:28px}
+      .logo{width:40px;height:40px;font-size:16px}
+    }
+
+    .muted{color:var(--muted)}
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#">
+        <div class="logo">KG</div>
+        <div>
+          <div style="font-weight:800">Kokkalis Global Search</div>
+          <div style="font-size:12px;color:var(--muted)">Recruiting • Staffing • HR Support</div>
+        </div>
+      </a>
+
+      <nav>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#specialties">Specialties</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div style="display:flex;gap:12px;align-items:center">
+        <a href="#contact" class="cta">Contact Us</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <h1>A Legacy of Quality Recruiting</h1>
+        <p>Fast, discreet, and expert staffing for legal, finance, technology, and events. Flexible recruiting services designed to scale with your business.</p>
+
+        <div class="actions">
+          <a class="btn btn-primary" href="#contact">Request a Consultation</a>
+          <a class="btn btn-outline" href="#specialties">See Specialties</a>
+        </div>
+
+        <div class="values">
+          <div class="card">
+            <h3>Rapid Turnaround</h3>
+            <p>Qualified placements within 24–48 hours for many roles.</p>
+          </div>
+          <div class="card">
+            <h3>Flexible Plans</h3>
+            <p>Subscription, retained or project-based pricing options.</p>
+          </div>
+          <div class="card">
+            <h3>Global Sourcing</h3>
+            <p>Access to an international talent network across key industries.</p>
+          </div>
+        </div>
+      </div>
+
+      <aside class="hero-card">
+        <div class="small-muted">Call / Text</div>
+        <div class="phone">(617) 555-1010</div>
+        <div class="muted" style="margin-top:8px">By appointment only</div>
+
+        <div style="margin-top:12px">
+          <div class="badge">Trusted Recruiting Since 2017</div>
+        </div>
+
+        <hr style="margin:14px 0;border:none;border-top:1px solid #eef6fb">
+
+        <div style="font-weight:700;margin-bottom:8px">Quick Links</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <a href="#specialties" style="text-decoration:none;color:var(--primary)">Submit Resume</a>
+          <a href="#contact" style="text-decoration:none;color:var(--primary)">Submit Job Order</a>
+          <a href="#testimonials" style="text-decoration:none;color:var(--primary)">Read Testimonials</a>
+        </div>
+      </aside>
+    </section>
+
+    <section id="about" class="section">
+      <h2>About Kokkalis Global Search</h2>
+      <p class="lead">We match exceptional talent with companies that value speed, precision, and professionalism. Our team screens every candidate thoroughly — saving your organization time and ensuring quality.</p>
+
+      <p class="muted">We support legal, finance, technology, HR, government, and large-scale event staffing needs. From temporary staffing to executive search, our model is flexible and results-driven.</p>
+
+      <div class="specialties">
+        <div class="chip">Legal Staffing</div>
+        <div class="chip">Financial Services</div>
+        <div class="chip">Technology</div>
+        <div class="chip">Administrative</div>
+        <div class="chip">Government Services</div>
+        <div class="chip">Event Staffing</div>
+      </div>
+    </section>
+
+    <section id="specialties" class="section">
+      <h2>Our Services</h2>
+      <p class="lead">Flexible solutions to match how you hire.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+        <div class="card">
+          <h3>Direct Hire</h3>
+          <p>Full-cycle permanent placement from sourcing to offer negotiation.</p>
+        </div>
+        <div class="card">
+          <h3>Temporary Staffing</h3>
+          <p>Short-term or project-based placements with rapid turnaround.</p>
+        </div>
+        <div class="card">
+          <h3>Contract-to-Hire</h3>
+          <p>Evaluate talent on contract before making a long-term commitment.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="testimonials" class="section">
+      <h2>What Clients Say</h2>
+      <div class="testimonials" style="margin-top:12px">
+        <blockquote>
+          “Kokkalis Global Search delivered excellent candidates under tight deadlines. Professional, fast, and reliable.”
+          <div class="test-author">— VP, Finance Firm</div>
+        </blockquote>
+
+        <blockquote>
+          “They understood our needs quickly and placed top-tier legal staff. Highly recommended.”
+          <div class="test-author">— Partner, Law Firm</div>
+        </blockquote>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <h2>Contact Us</h2>
+      <p class="lead">Reach out to discuss your hiring needs — we'll guide you through our process.</p>
+
+      <div class="contact-grid">
+        <div>
+          <div style="background:#fff;border-radius:10px;padding:16px;border:1px solid #eef2f6">
+            <strong>Kokkalis Global Search</strong>
+            <div class="muted" style="margin-top:6px">Boston, MA — USA</div>
+
+            <div style="margin-top:12px">
+              <div style="font-weight:700">Phone</div>
+              <div class="muted">(617) 555-1010</div>
+            </div>
+
+            <div style="margin-top:12px">
+              <div style="font-weight:700">Email</div>
+              <div class="muted">info@kokkalisglobal.com</div>
+            </div>
+          </div>
+        </div>
+
+        <form id="contactForm" onsubmit="return handleSubmit(event)" style="background:white;padding:14px;border-radius:10px;border:1px solid #eef2f6">
+          <div style="display:grid;gap:10px">
+            <div>
+              <label for="name">Name</label>
+              <input id="name" required placeholder="Your name">
+            </div>
+
+            <div>
+              <label for="company">Company</label>
+              <input id="company" placeholder="Company name (optional)">
+            </div>
+
+            <div>
+              <label for="email">Email</label>
+              <input id="email" type="email" required placeholder="you@company.com">
+            </div>
+
+            <div>
+              <label for="message">Message</label>
+              <textarea id="message" placeholder="Tell us what you're hiring for..." required></textarea>
+            </div>
+
+            <div style="display:flex;gap:10px;align-items:center">
+              <button class="btn btn-primary" type="submit">Send Message</button>
+              <a class="btn btn-outline" href="mailto:info@kokkalisglobal.com">Email Us</a>
+            </div>
+
+            <div class="form-help muted">This form opens your email program. A backend can be added later.</div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <footer class="section">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+        <div>
+          <strong>Kokkalis Global Search</strong><br>
+          <span class="muted">© <span id="yr"></span> Kokkalis Global Search — All rights reserved</span>
+        </div>
+
+        <div class="muted">Follow: <a href="#" style="color:var(--primary);text-decoration:none">LinkedIn</a></div>
+      </div>
+    </footer>
+  </main>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  function handleSubmit(e){
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const company = document.getElementById('company').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+
+    const subject = encodeURIComponent('Staffing Inquiry from ' + name);
+    const body = encodeURIComponent(
+      `Name: ${name}\nCompany: ${company}\nEmail: ${email}\n\nMessage:\n${message}`
+    );
+
+    window.location.href = `mailto:info@kokkalisglobal.com?subject=${subject}&body=${body}`;
+    return false;
+  }
+</script>
+
+</body>
+</html>
