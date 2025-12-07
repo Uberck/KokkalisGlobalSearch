@@ -1,6 +1,9 @@
 # Server script
 server.ps1
 
+# Untracked files
+untracked/
+
 # OS files
 .DS_Store
 Thumbs.db
