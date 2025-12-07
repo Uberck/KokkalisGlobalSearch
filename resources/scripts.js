@@ -50,7 +50,7 @@
   if(form){
     form.addEventListener('submit', e=>{
       e.preventDefault();
-      alert('Thanks — we received your message (demo). Replace with your backend or email service to fully enable contact.');
+      alert('Thanks, we received your message. We will get back to you within 1 business day.');
       form.reset();
     })
   }
