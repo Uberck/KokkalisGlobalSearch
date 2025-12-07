@@ -175,7 +175,13 @@
             <h2 class="section-title">Start a search</h2>
             <p>Tell us about the role and timeline — we’ll get back to you within one business day.</p>
 
-            <form id="contact-form" class="contact-form" autocomplete="on">
+            <form id="contact-form" class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+              <!-- Replace YOUR_ACCESS_KEY with your actual Web3Forms access key -->
+              <input type="hidden" name="access_key" value="4b220e59-398f-4366-a7ab-82a83ec06757">
+              <input type="hidden" name="subject" value="New Contact Form Submission from Kokkalis Global Search">
+              <input type="hidden" name="from_name" value="Kokkalis Global Search Website">
+              <input type="hidden" name="redirect" value="https://web3forms.com/success">
+              
               <div class="form-row">
                 <input type="text" name="name" placeholder="Your name" required />
                 <input type="email" name="email" placeholder="Email" required />

@@ -45,14 +45,33 @@
     })
   }
 
-  // contact form demo
+  // Contact form - Web3Forms handles submissions
   const form = document.getElementById('contact-form');
   if(form){
-    form.addEventListener('submit', e=>{
-      e.preventDefault();
-      alert('Thanks, we received your message. We will get back to you within 1 business day.');
-      form.reset();
-    })
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();     
+      const formData = new FormData(form);
+      const button = form.querySelector('button[type="submit"]');
+      const originalText = button.textContent;   
+      button.textContent = 'Sending...';
+      button.disabled = true;    
+      try {
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData
+        });    
+        const data = await response.json();       
+        if (data.success) {
+          alert('Thanks! We received your message and will get back to you within 1 business day.');
+          form.reset();
+        } else {
+          alert('Oops! Something went wrong. Please email us directly at kokkalisgs@gmail.com');
+        }
+      } catch (error) {
+        alert('Oops! Something went wrong. Please email us directly at kokkalisgs@gmail.com');
+      } 
+      button.textContent = originalText;
+      button.disabled = false;
+    });
   }
-
 })();
