@@ -66,21 +66,33 @@
         <div class="container">
           <h2 class="section-title">What we do</h2>
           <div class="grid grid-3">
-            <article class="service-card">
+            <article class="service-card" data-service="executive">
               <h3>Executive Search</h3>
               <p>Confidential C-suite and leadership searches with targeted outreach and assessment.</p>
+              <button class="service-learn-more">Learn More →</button>
             </article>
-            <article class="service-card">
+            <article class="service-card" data-service="permanent">
               <h3>Permanent Hiring</h3>
               <p>End-to-end hiring for engineering, product and GTM roles — sourcing, screening, and offer support.</p>
+              <button class="service-learn-more">Learn More →</button>
             </article>
-            <article class="service-card">
+            <article class="service-card" data-service="contract">
               <h3>Contract & Interim</h3>
               <p>Senior contractors and interim leaders for critical short-term needs.</p>
+              <button class="service-learn-more">Learn More →</button>
             </article>
           </div>
         </div>
       </section>
+
+      <!-- Service Modal -->
+      <div id="service-modal" class="modal">
+        <div class="modal-content">
+          <span class="modal-close">&times;</span>
+          <h2 id="modal-title"></h2>
+          <div id="modal-body"></div>
+        </div>
+      </div>
 
       <!-- Featured roles (wide list like phpagency) -->
       <section id="jobs" class="section jobs section--wide">
@@ -134,7 +146,7 @@
         </div>
       </section>
 
-      <!-- About (two-column with bold facts) -->
+      <!-- About -->
       <section id="about" class="section about">
         <div class="container about-inner">
           <div class="about-copy">
@@ -176,7 +188,6 @@
             <p>Tell us about the role and timeline — we’ll get back to you within one business day.</p>
 
             <form id="contact-form" class="contact-form" action="https://api.web3forms.com/submit" method="POST">
-              <!-- Replace YOUR_ACCESS_KEY with your actual Web3Forms access key -->
               <input type="hidden" name="access_key" value="4b220e59-398f-4366-a7ab-82a83ec06757">
               <input type="hidden" name="subject" value="New Contact Form Submission from Kokkalis Global Search">
               <input type="hidden" name="from_name" value="Kokkalis Global Search Website">
