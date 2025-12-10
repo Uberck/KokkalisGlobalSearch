@@ -166,20 +166,76 @@
     }
   });
 
-  // job filter
-  const filter = document.getElementById('filter-role');
+  // Job pagination
   const jobList = document.getElementById('job-list');
-  if(filter && jobList){
-    filter.addEventListener('change', ()=>{
-      const val = filter.value;
-      const rows = jobList.querySelectorAll('[data-role]');
-      rows.forEach(r=>{
-        const role = r.getAttribute('data-role');
-        if(val === 'all' || role === val) r.style.display = '';
-        else r.style.display = 'none';
-      })
-    })
+  const prevBtn = document.getElementById('prev-page');
+  const nextBtn = document.getElementById('next-page');
+  const pageInfo = document.getElementById('page-info');
+  const filter = document.getElementById('filter-role');
+  
+  let currentPage = 1;
+  const jobsPerPage = 4;
+  let allJobs = [];
+  let filteredJobs = [];
+
+  function initJobs() {
+    allJobs = Array.from(jobList.querySelectorAll('.job-row'));
+    filteredJobs = [...allJobs];
+    showPage(1);
   }
+
+  function showPage(page) {
+    currentPage = page;
+    const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
+    
+    // Hide all jobs first
+    allJobs.forEach(job => job.style.display = 'none');
+    
+    // Show only jobs for current page
+    const start = (page - 1) * jobsPerPage;
+    const end = start + jobsPerPage;
+    const jobsToShow = filteredJobs.slice(start, end);
+    
+    jobsToShow.forEach(job => job.style.display = '');
+    
+    // Update pagination controls
+    pageInfo.textContent = `Page ${page} of ${totalPages}`;
+    prevBtn.disabled = page === 1;
+    nextBtn.disabled = page >= totalPages;
+  }
+
+  function filterJobs() {
+    const val = filter.value;
+    if (val === 'all') {
+      filteredJobs = [...allJobs];
+    } else {
+      filteredJobs = allJobs.filter(job => job.getAttribute('data-role') === val);
+    }
+    showPage(1); // Reset to first page when filtering
+  }
+
+  if (jobList && prevBtn && nextBtn) {
+    initJobs();
+    
+    prevBtn.addEventListener('click', () => {
+      if (currentPage > 1) {
+        showPage(currentPage - 1);
+      }
+    });
+    
+    nextBtn.addEventListener('click', () => {
+      const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
+      if (currentPage < totalPages) {
+        showPage(currentPage + 1);
+      }
+    });
+    
+    if (filter) {
+      filter.addEventListener('change', filterJobs);
+    }
+  }
+
+  // job filter (old implementation removed, now handled by pagination above)
 
   // Contact form - Web3Forms handles submissions
   const form = document.getElementById('contact-form');

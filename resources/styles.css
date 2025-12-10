@@ -59,6 +59,14 @@ body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Rob
 .muted{color:var(--muted)}
 .button.small{padding:.5rem .8rem;font-size:.9rem}
 
+/* Pagination controls */
+.pagination-controls{display:flex;justify-content:center;align-items:center;gap:2rem;margin-top:2rem;padding-top:1rem}
+.pagination-btn{background:var(--accent);border:none;padding:.8rem 1.4rem;border-radius:10px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s;color:#fff;font-size:.95rem}
+.pagination-btn:hover:not(:disabled){background:#d32f3f;transform:translateY(-1px);box-shadow:0 4px 12px rgba(230,57,70,0.3)}
+.pagination-btn:disabled{opacity:0.4;cursor:not-allowed}
+.pagination-btn:disabled:hover{transform:none;box-shadow:none}
+.pagination-info{font-weight:600;color:#111;font-size:.95rem}
+
 /* About */
 .about-inner{display:flex;gap:2.5rem;align-items:center}
 .about-copy{flex:1}
@@ -78,6 +86,17 @@ body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Rob
 .site-footer{border-top:1px solid #eee;padding:32px 0 22px;margin-top:40px}
 .footer-logos{text-align:center;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid #eee}
 .footer-logos-title{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 18px;font-weight:600}
+.logos-scroll-wrapper{overflow:hidden;position:relative;width:100%}
+.logos-scroll{display:flex;gap:40px;align-items:center;animation:scroll 20s linear infinite;width:fit-content}
+.logos-scroll img{width:100px;opacity:0.7;filter:grayscale(100%);transition:all 0.3s;flex-shrink:0}
+.logos-scroll img:hover{opacity:1;filter:grayscale(0%);animation-play-state:paused}
+.logos-scroll-wrapper:hover .logos-scroll{animation-play-state:paused}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.33%); }
+}
+
 .footer-logos .trusted-logos{display:flex;gap:28px;justify-content:center;align-items:center}
 .footer-logos .trusted-logos img{width:100px;opacity:0.7;filter:grayscale(100%);transition:all 0.3s}
 .footer-logos .trusted-logos img:hover{opacity:1;filter:grayscale(0%)}
