@@ -30,6 +30,29 @@
   // footer year
   document.getElementById('year').textContent = new Date().getFullYear();
 
+  // Cookie Consent Banner
+  const cookieBanner = document.getElementById('cookie-banner');
+  const cookieAccept = document.getElementById('cookie-accept');
+  
+  // Check if user has already accepted cookies
+  if (!localStorage.getItem('cookiesAccepted')) {
+    // Show banner after a short delay
+    setTimeout(() => {
+      cookieBanner.classList.add('show');
+    }, 1000);
+  }
+  
+  // Handle accept button click
+  if (cookieAccept) {
+    cookieAccept.addEventListener('click', () => {
+      localStorage.setItem('cookiesAccepted', 'true');
+      cookieBanner.classList.remove('show');
+      setTimeout(() => {
+        cookieBanner.style.display = 'none';
+      }, 300);
+    });
+  }
+
   // Service Modal
   const modal = document.getElementById('service-modal');
   const modalTitle = document.getElementById('modal-title');
