@@ -2,19 +2,39 @@
   --accent:#e63946; /* bold red accent credit php agency */
   --muted:#6b7280;
   --max-width:1200px;
+  --bg-primary:#fff;
+  --bg-secondary:#fafafa;
+  --text-primary:#111;
+  --text-secondary:#6b7280;
+  --border-color:#eee;
+  --card-bg:#fff;
+  --header-bg:#fff;
+  --modal-bg:#fff;
 }
+
+body.dark-mode {
+  --bg-primary:#0f0f0f;
+  --bg-secondary:#1a1a1a;
+  --text-primary:#e5e5e5;
+  --text-secondary:#a0a0a0;
+  --border-color:#333;
+  --card-bg:#1f1f1f;
+  --header-bg:#141414;
+  --modal-bg:#1f1f1f;
+}
+
 *{box-sizing:border-box}
 html,body{height:100%;}
-body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin:0; color:#111;background:#fff}
+body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin:0; color:var(--text-primary);background:var(--bg-primary);transition:background 0.3s ease, color 0.3s ease}
 .container{max-width:var(--max-width);margin:0 auto;padding:1rem}
 
 /* Header */
-.site-header{position:fixed;left:0;right:0;top:0;z-index:60;background:#fff;border-bottom:1px solid rgba(17,24,39,0.06)}
+.site-header{position:fixed;left:0;right:0;top:0;z-index:60;background:var(--header-bg);border-bottom:1px solid var(--border-color);transition:background 0.3s ease}
 .header-inner{display:flex;align-items:center;justify-content:space-between;padding:18px 1rem}
-.brand{font-weight:800;letter-spacing:.2px;color:#111;font-size:1.05rem;text-decoration:none}
+.brand{font-weight:800;letter-spacing:.2px;color:var(--text-primary);font-size:1.05rem;text-decoration:none}
 .main-nav{display:flex;gap:1.25rem;align-items:center}
-.main-nav a{color:var(--muted);text-decoration:none;padding:.5rem .65rem;border-radius:6px;font-weight:600}
-.main-nav a:hover{color:#000}
+.main-nav a{color:var(--text-secondary);text-decoration:none;padding:.5rem .65rem;border-radius:6px;font-weight:600;transition:color 0.2s}
+.main-nav a:hover{color:var(--text-primary)}
 
 /* Google Search Form styling */
 .main-nav .form-inline{display:flex;gap:6px;align-items:center;margin:0}
@@ -23,8 +43,17 @@ body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Rob
 .main-nav .btn{padding:.5rem 1rem;background:var(--accent);color:#fff;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px;transition:background 0.2s}
 .main-nav .btn:hover{background:#d32f3f}
 
+.dark-mode-toggle{background:none;border:none;cursor:pointer;padding:.5rem;border-radius:8px;display:flex;align-items:center;justify-content:center;transition:background 0.2s;font-size:1.3rem;position:relative}
+.dark-mode-toggle:hover{background:var(--border-color)}
+.dark-mode-toggle::after{content:attr(data-tooltip);position:absolute;bottom:-35px;right:0;background:var(--text-primary);color:var(--bg-primary);padding:6px 12px;border-radius:6px;font-size:12px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.2s;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.dark-mode-toggle:hover::after{opacity:1}
+.dark-mode-toggle .icon-sun{display:inline}
+.dark-mode-toggle .icon-moon{display:none}
+body.dark-mode .dark-mode-toggle .icon-sun{display:none}
+body.dark-mode .dark-mode-toggle .icon-moon{display:inline}
+
 .menu-toggle{display:none;background:none;border:0;cursor:pointer}
-.menu-toggle span{display:block;width:22px;height:2px;background:#111;margin:4px 0;border-radius:2px}
+.menu-toggle span{display:block;width:22px;height:2px;background:var(--text-primary);margin:4px 0;border-radius:2px}
 
 /* Hero */
 .hero{position:relative;margin-top:70px}
@@ -42,21 +71,21 @@ body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Rob
 
 /* Sections */
 .section{padding:4.5rem 0}
-.section-title{font-size:1.6rem;margin:0 0 1.5rem;font-weight:700;color:#111}
+.section-title{font-size:1.6rem;margin:0 0 1.5rem;font-weight:700;color:var(--text-primary)}
 .grid{display:grid;gap:1rem}
 .grid-3{grid-template-columns:repeat(3,1fr)}
-.service-card{background:#fff;padding:28px;border-radius:12px;border:1px solid #f3f4f6;box-shadow:0 10px 30px rgba(17,24,39,0.04)}
+.service-card{background:var(--card-bg);padding:28px;border-radius:12px;border:1px solid var(--border-color);box-shadow:0 10px 30px rgba(0,0,0,0.04);transition:background 0.3s ease, border-color 0.3s ease}
 .service-card h3{color:var(--accent);margin:0 0 .6rem}
-.service-card p{color:var(--muted);margin:0}
+.service-card p{color:var(--text-secondary);margin:0}
 
 /* Jobs list */
-.section--wide{background:#fafafa}
+.section--wide{background:var(--bg-secondary);transition:background 0.3s ease}
 .jobs-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
-.select select{padding:.6rem;border-radius:8px;border:1px solid #e6e7eb}
+.select select{padding:.6rem;border-radius:8px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-primary)}
 .job-list{display:flex;flex-direction:column;gap:12px}
-.job-row{display:flex;justify-content:space-between;align-items:center;padding:18px;border-radius:12px;background:#fff;border:1px solid #eee}
-.job-left h3{margin:0;font-size:1.05rem}
-.muted{color:var(--muted)}
+.job-row{display:flex;justify-content:space-between;align-items:center;padding:18px;border-radius:12px;background:var(--card-bg);border:1px solid var(--border-color);transition:background 0.3s ease, border-color 0.3s ease}
+.job-left h3{margin:0;font-size:1.05rem;color:var(--text-primary)}
+.muted{color:var(--text-secondary)}
 .button.small{padding:.5rem .8rem;font-size:.9rem}
 
 /* Pagination controls */
@@ -79,17 +108,19 @@ body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Rob
 /* Contact */
 .contact-inner{display:grid;grid-template-columns:2fr 1fr;gap:2rem;align-items:start}
 .form-row{display:flex;gap:12px}
-.contact-form input, .contact-form select, .contact-form textarea{width:100%;padding:.85rem;border-radius:8px;border:1px solid #e6e7eb}
-.contact-aside{background:#fff;padding:20px;border-radius:12px;border:1px solid #f3f4f6}
+.contact-form input, .contact-form select, .contact-form textarea{width:100%;padding:.85rem;border-radius:8px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-primary)}
+.contact-aside{background:var(--card-bg);padding:20px;border-radius:12px;border:1px solid var(--border-color)}
 
 /* Footer */
-.site-footer{border-top:1px solid #eee;padding:32px 0 22px;margin-top:40px}
-.footer-logos{text-align:center;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid #eee}
-.footer-logos-title{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 18px;font-weight:600}
+.site-footer{border-top:1px solid var(--border-color);padding:32px 0 22px;margin-top:40px;background:var(--bg-primary);transition:background 0.3s ease}
+.footer-logos{text-align:center;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--border-color)}
+.footer-logos-title{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--text-secondary);margin:0 0 18px;font-weight:600}
 .logos-scroll-wrapper{overflow:hidden;position:relative;width:100%}
 .logos-scroll{display:flex;gap:40px;align-items:center;animation:scroll 20s linear infinite;width:fit-content}
 .logos-scroll img{width:100px;opacity:0.7;filter:grayscale(100%);transition:all 0.3s;flex-shrink:0}
+body.dark-mode .logos-scroll img{filter:grayscale(100%) brightness(2)}
 .logos-scroll img:hover{opacity:1;filter:grayscale(0%);animation-play-state:paused}
+body.dark-mode .logos-scroll img:hover{filter:grayscale(0%) brightness(1.2)}
 .logos-scroll-wrapper:hover .logos-scroll{animation-play-state:paused}
 
 @keyframes scroll {
@@ -140,23 +171,24 @@ body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Rob
 img{display:block;max-width:100%}
 
 /* Service Modal */
-.modal{display:none;position:fixed;z-index:1000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.6);overflow:auto}
+.modal{display:none;position:fixed;z-index:1000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.7);overflow:auto}
 .modal.show{display:block}
-.modal-content{background:#fff;margin:5% auto;padding:30px;border-radius:12px;max-width:600px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
-.modal-close{position:absolute;right:20px;top:15px;font-size:32px;font-weight:700;color:#999;cursor:pointer;transition:color 0.2s}
-.modal-close:hover{color:#333}
-.modal-content h2{margin:0 0 20px;color:var(--primary);font-size:1.8rem}
-.modal-content p{margin:0 0 15px;line-height:1.6}
+.modal-content{background:var(--modal-bg);margin:5% auto;padding:30px;border-radius:12px;max-width:600px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.3);transition:background 0.3s ease}
+.modal-close{position:absolute;right:20px;top:15px;font-size:32px;font-weight:700;color:var(--text-secondary);cursor:pointer;transition:color 0.2s}
+.modal-close:hover{color:var(--text-primary)}
+.modal-content h2{margin:0 0 20px;color:var(--accent);font-size:1.8rem}
+.modal-content h3{color:var(--text-primary);margin-top:20px}
+.modal-content p{margin:0 0 15px;line-height:1.6;color:var(--text-primary)}
 .modal-content ul{margin:15px 0;padding-left:20px}
-.modal-content li{margin:8px 0}
+.modal-content li{margin:8px 0;color:var(--text-primary)}
 .service-learn-more{background:transparent;border:1px solid var(--accent);color:var(--accent);padding:8px 16px;border-radius:6px;margin-top:12px;cursor:pointer;font-weight:600;transition:all 0.2s}
 .service-learn-more:hover{background:var(--accent);color:#fff}
 
 /* Cookie Consent Banner */
-.cookie-banner{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--accent);box-shadow:0 -4px 20px rgba(0,0,0,0.1);z-index:100;padding:20px;display:none}
+.cookie-banner{position:fixed;bottom:0;left:0;right:0;background:var(--header-bg);border-top:2px solid var(--accent);box-shadow:0 -4px 20px rgba(0,0,0,0.2);z-index:100;padding:20px;display:none;transition:background 0.3s ease}
 .cookie-banner.show{display:block;animation:slideUp 0.3s ease}
 .cookie-content{max-width:var(--max-width);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
-.cookie-content p{margin:0;font-size:14px;color:#333;flex:1;min-width:250px}
+.cookie-content p{margin:0;font-size:14px;color:var(--text-primary);flex:1;min-width:250px}
 .cookie-content a{color:var(--accent);text-decoration:underline}
 .cookie-buttons{display:flex;gap:12px;align-items:center}
 .cookie-btn{background:var(--accent);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-size:14px}

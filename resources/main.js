@@ -30,6 +30,40 @@
   // footer year
   document.getElementById('year').textContent = new Date().getFullYear();
 
+  // Dark Mode Toggle
+  const darkModeToggle = document.getElementById('dark-mode-toggle');
+  const body = document.body;
+  
+  // Update tooltip text based on current mode
+  function updateTooltip() {
+    if (body.classList.contains('dark-mode')) {
+      darkModeToggle.setAttribute('data-tooltip', 'Switch to light mode');
+    } else {
+      darkModeToggle.setAttribute('data-tooltip', 'Switch to dark mode');
+    }
+  }
+  
+  // Check for saved dark mode preference
+  if (localStorage.getItem('darkMode') === 'enabled') {
+    body.classList.add('dark-mode');
+  }
+  updateTooltip();
+  
+  // Toggle dark mode
+  if (darkModeToggle) {
+    darkModeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark-mode');
+      updateTooltip();
+      
+      // Save preference
+      if (body.classList.contains('dark-mode')) {
+        localStorage.setItem('darkMode', 'enabled');
+      } else {
+        localStorage.setItem('darkMode', 'disabled');
+      }
+    });
+  }
+
   // Cookie Consent Banner
   const cookieBanner = document.getElementById('cookie-banner');
   const cookieAccept = document.getElementById('cookie-accept');
