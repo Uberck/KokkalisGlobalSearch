@@ -33,6 +33,7 @@
   // Cookie Consent Banner
   const cookieBanner = document.getElementById('cookie-banner');
   const cookieAccept = document.getElementById('cookie-accept');
+  const cookieDecline = document.getElementById('cookie-decline');
   
   // Check if user has already accepted cookies
   if (!localStorage.getItem('cookiesAccepted')) {
@@ -50,6 +51,13 @@
       setTimeout(() => {
         cookieBanner.style.display = 'none';
       }, 300);
+    });
+  }
+
+  // Handle decline button click - redirect to Google
+  if (cookieDecline) {
+    cookieDecline.addEventListener('click', () => {
+      window.location.href = 'https://www.google.com';
     });
   }
 
