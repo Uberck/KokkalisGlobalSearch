@@ -77,11 +77,15 @@
     }, 1000);
   }
   
-  // Handle accept button click
+  // Handle accept button click / cookie banner fix
   if (cookieAccept) {
     cookieAccept.addEventListener('click', () => {
       localStorage.setItem('cookiesAccepted', 'true');
       cookieBanner.classList.remove('show');
+      const scrollBtn = document.getElementById('scroll-to-top');
+      if (scrollBtn) {
+        scrollBtn.classList.add('cookie-accepted');
+      }
       setTimeout(() => {
         cookieBanner.style.display = 'none';
       }, 300);
@@ -336,6 +340,11 @@
   const scrollToTopBtn = document.getElementById('scroll-to-top');
   
   if (scrollToTopBtn) {
+    // Check if cookies already accepted and adjust position / cookie banner fix
+    if (localStorage.getItem('cookiesAccepted') === 'true') {
+      scrollToTopBtn.classList.add('cookie-accepted');
+    }
+    
     window.addEventListener('scroll', () => {
       if (window.pageYOffset > 300) {
         scrollToTopBtn.classList.add('show');
