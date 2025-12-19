@@ -30,6 +30,22 @@
   // footer year
   document.getElementById('year').textContent = new Date().getFullYear();
 
+  // Google Search Form Validation
+  const googleSearchForm = document.getElementById('google-search-form');
+  const googleSearchInput = document.getElementById('google-search-input');
+  
+  if (googleSearchForm && googleSearchInput) {
+    googleSearchForm.addEventListener('submit', function(e) {
+      const searchTerm = googleSearchInput.value.trim();
+      
+      if (searchTerm === '') {
+        e.preventDefault();
+        alert('Please enter a search term before searching.');
+        googleSearchInput.focus();
+      }
+    });
+  }
+
   // Dark Mode Toggle
   const darkModeToggle = document.getElementById('dark-mode-toggle');
   const body = document.body;
