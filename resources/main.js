@@ -15,14 +15,15 @@
     })
   })
 
-  // smooth scroll
+  // smooth scroll (respects reduced motion)
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.querySelectorAll('a[href^="#"]').forEach(a=>{
     a.addEventListener('click', e=>{
       const href = a.getAttribute('href');
       if(href.length>1){
         e.preventDefault();
         const el = document.querySelector(href);
-        if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+        if(el) el.scrollIntoView({behavior: prefersReduced ? 'auto' : 'smooth', block:'start'});
       }
     })
   });
@@ -372,7 +373,7 @@
     scrollToTopBtn.addEventListener('click', () => {
       window.scrollTo({
         top: 0,
-        behavior: 'smooth'
+        behavior: prefersReduced ? 'auto' : 'smooth'
       });
     });
   }
