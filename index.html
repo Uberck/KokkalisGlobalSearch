@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- ===========================
+         Meta Tags
+         =========================== -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Kokkalis Global Search — Executive Recruiting & Talent Acquisition</title>
@@ -8,6 +11,9 @@
     <meta name="keywords" content="executive recruiting, Boston recruiting agency, tech talent acquisition, executive search, permanent hiring, contract staffing, recruiting services" />
     <meta name="author" content="Kokkalis Global Search" />
 
+    <!-- ===========================
+         Open Graph / Social Media
+         =========================== -->
     <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://kokkalisgs.com/" />
@@ -26,15 +32,23 @@
     <meta name="twitter:description" content="Premier recruiting agency in Boston. Executive search, permanent hiring, and contract staffing for tech companies." />
     <meta name="twitter:image" content="https://kokkalisgs.com/resources/KGS.png" />
 
+    <!-- ===========================
+         Analytics
+         =========================== -->
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZRWEEF2ZTQ"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+      function gtag() {
+        dataLayer.push(arguments);
+      }
       gtag('js', new Date());
       gtag('config', 'G-ZRWEEF2ZTQ');
     </script>
 
+    <!-- ===========================
+         Fonts & Styles
+         =========================== -->
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,7 +57,10 @@
     <!-- Link to CSS -->
     <link rel="stylesheet" href="resources/home.css" />
     <link rel="icon" href="resources/favicon2.png" type="image/png" sizes="32x32">
-    
+
+    <!-- ===========================
+         Structured Data
+         =========================== -->
     <!-- Structured Data: Organization -->
     <script type="application/ld+json">
     {
@@ -62,41 +79,52 @@
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "customer service",
-        "email": "kokkalisgs@gmail.com",
+        "email": "admin@kokkalisgs.com",
         "telephone": "+1-617-398-7045",
         "areaServed": "US"
       }
     }
     </script>
   </head>
+
   <body>
+    <!-- ===========================
+         Accessibility Skip Link
+         =========================== -->
     <a href="#main-content" class="skip-link">Skip to content</a>
+
+    <!-- ===========================
+         Site Header
+         =========================== -->
     <header class="site-header">
       <div class="container header-inner">
+        <!-- Brand / Logo -->
         <a class="brand" href="#">
           <span class="brand-text">Kokkalis Global Search</span>
           <img src="resources/KGS.png" alt="KGS Logo" class="brand-logo" />
         </a>
 
+        <!-- Main Navigation -->
         <nav class="main-nav" id="main-nav">
           <a href="#services">Services</a>
           <a href="#jobs">Jobs</a>
           <a href="#about">About</a>
           <a href="#contact" class="button button-outline">Contact</a>
-          
-          <!-- Google search -->
+
+          <!-- Google Search Form -->
           <form id="google-search-form" class="form-inline mt-2 mt-md-0" action="https://www.google.com/search" method="GET">
-            <input id="google-search-input" class="form-control mr-sm-2" type="text" name="q" placeholder="Google It!" aria-label="Search">        
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> 
+            <input id="google-search-input" class="form-control mr-sm-2" type="text" name="q" placeholder="Google It!" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
 
+          <!-- Dark Mode Toggle -->
           <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Toggle dark mode" data-tooltip="Switch to dark mode">
             <span class="icon-sun">☀️</span>
             <span class="icon-moon">🌙</span>
           </button>
-
         </nav>
-        
+
+        <!-- Mobile Menu Toggle -->
         <button id="menu-toggle" class="menu-toggle" aria-label="Toggle menu">
           <span></span>
           <span></span>
@@ -105,8 +133,14 @@
       </div>
     </header>
 
+    <!-- ===========================
+         Main Content
+         =========================== -->
     <main id="main-content">
-      <!-- Hero -->
+
+      <!-- ===========================
+           Hero Section
+           =========================== -->
       <section class="hero hero--large">
         <div class="hero-media-bg" aria-hidden="true">
           <video autoplay muted loop playsinline id="hero-video" preload="auto">
@@ -127,7 +161,9 @@
         </div>
       </section>
 
-      <!-- Services -->
+      <!-- ===========================
+           Services Section
+           =========================== -->
       <section id="services" class="section services">
         <div class="container">
           <h2 class="section-title">What we do</h2>
@@ -137,21 +173,31 @@
               <p>Confidential C-suite and leadership searches with targeted outreach and assessment.</p>
               <button class="service-learn-more">Learn More →</button>
             </article>
+
             <article class="service-card" data-service="permanent">
               <h3>Permanent Hiring</h3>
               <p>End-to-end hiring for engineering, product and GTM roles — sourcing, screening, and offer support.</p>
               <button class="service-learn-more">Learn More →</button>
             </article>
+
             <article class="service-card" data-service="contract">
               <h3>Contract & Interim</h3>
               <p>Senior contractors and interim leaders for critical short-term needs.</p>
+              <button class="service-learn-more">Learn More →</button>
+            </article>
+
+            <article class="service-card" data-service="advisory">
+              <h3>Talent Advisory & Recruiting Operations Consulting</h3>
+              <p>Strategic guidance to optimize your hiring processes, build internal recruiting capabilities, and scale your talent acquisition.</p>
               <button class="service-learn-more">Learn More →</button>
             </article>
           </div>
         </div>
       </section>
 
-      <!-- Service Modal -->
+      <!-- ===========================
+           Service Modal
+           =========================== -->
       <div id="service-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-body">
         <div class="modal-content">
           <span class="modal-close" aria-label="Close">&times;</span>
@@ -160,7 +206,9 @@
         </div>
       </div>
 
-      <!-- Featured roles -->
+      <!-- ===========================
+           Featured Roles Section
+           =========================== -->
       <section id="jobs" class="section jobs section--wide">
         <div class="container">
           <div class="jobs-header">
@@ -178,6 +226,7 @@
             </div>
           </div>
 
+          <!-- Job List -->
           <div class="job-list" id="job-list">
             <article class="job-row" data-role="engineering">
               <div class="job-left">
@@ -320,6 +369,7 @@
             </article>
           </div>
 
+          <!-- Pagination Controls -->
           <div class="pagination-controls">
             <button class="pagination-btn" id="prev-page" disabled>
               <span>← Previous</span>
@@ -331,30 +381,32 @@
               <span>Next →</span>
             </button>
           </div>
-
         </div>
       </section>
 
-      <!-- About -->
+      <!-- ===========================
+           About Section
+           =========================== -->
       <section id="about" class="section about">
         <div class="container about-inner">
           <div class="about-copy">
             <h2 class="section-title">About Kokkalis Global Search</h2>
-            <p>Kokkalis Global Search isn’t just another recruiting agency — it’s a high-impact talent partner built to outperform your competitors. In a market crowded with vendors who simply pass along resumes, Kokkalis stands apart by acting as a true advisor, strategist, and extension of your leadership team.</p>
+            <p>Kokkalis Global Search isn't just another recruiting agency — it's a high-impact talent partner built to outperform your competitors. In a market crowded with vendors who simply pass along resumes, Kokkalis stands apart by acting as a true advisor, strategist, and extension of your leadership team.</p>
 
-            <p>We don’t just fill roles.<br />
-            We solve hiring problems.<br />
-            We elevate talent strategy.<br />
-            And we deliver results that move your business forward.</p>
+            <p>
+              We don't just fill roles.<br />
+              We solve hiring problems.<br />
+              We elevate talent strategy.<br />
+              And we deliver results that move your business forward.
+            </p>
 
             <p>Backed by elite expertise in executive search, global talent acquisition, and building high-performing teams across industries, Kokkalis operates with a performance mindset: faster, sharper, and more committed than the competition.</p>
+
             <p>Clients choose Kokkalis because they want a partner who understands the full picture — business goals, organizational design, culture alignment, competitive talent landscapes — and who knows how to turn that understanding into the right hire, every time.</p>
 
-            <p>When you work with Kokkalis, you get more than a recruiter.
-            You get a trusted partner who will guide you through every step of your hiring journey with clarity, confidence, and a relentless commitment to excellence.</p>
+            <p>When you work with Kokkalis, you get more than a recruiter. You get a trusted partner who will guide you through every step of your hiring journey with clarity, confidence, and a relentless commitment to excellence.</p>
 
-            <p>Stronger execution. Deeper partnership. Better hires.
-            That’s the Kokkalis Global Search difference.</p>
+            <p>Stronger execution. Deeper partnership. Better hires. That's the Kokkalis Global Search difference.</p>
 
             <div class="stats">
               <div><strong>10+</strong><span>years</span></div>
@@ -369,7 +421,9 @@
         </div>
       </section>
 
-      <!-- Testimonials -->
+      <!-- ===========================
+           Testimonials Section
+           =========================== -->
       <section class="section testimonials">
         <div class="container">
           <h2 class="section-title">What our clients say</h2>
@@ -410,37 +464,43 @@
         </div>
       </section>
 
-      <!-- Contact -->
+      <!-- ===========================
+           Contact Section
+           =========================== -->
       <section id="contact" class="section contact">
         <div class="container contact-inner">
           <div class="contact-copy">
             <h2 class="section-title">Start a search</h2>
-            <p>Tell us about the role and timeline — we’ll get back to you within one business day.</p>
+            <p>Tell us about the role and timeline — we'll get back to you within one business day.</p>
 
             <form id="contact-form" class="contact-form" action="https://api.web3forms.com/submit" method="POST">
               <input type="hidden" name="access_key" value="4b220e59-398f-4366-a7ab-82a83ec06757">
               <input type="hidden" name="subject" value="New Contact Form Submission from Kokkalis Global Search">
               <input type="hidden" name="from_name" value="Kokkalis Global Search Website">
               <input type="hidden" name="redirect" value="https://web3forms.com/success">
-              
+
               <div class="form-row">
                 <input type="text" name="name" placeholder="Your name" required />
                 <input type="email" name="email" placeholder="Email" required />
               </div>
+
               <input type="text" name="company" placeholder="Company" />
+
               <select name="interest">
                 <option>Hiring</option>
                 <option>Applying for a role</option>
                 <option>General inquiry</option>
               </select>
+
               <textarea name="message" rows="5" placeholder="Tell us about the role or your question..." required></textarea>
+
               <button class="button button-primary" type="submit">Send message</button>
             </form>
           </div>
 
           <aside class="contact-aside">
             <h3>Contact</h3>
-            <p><strong>Email:</strong> kokkalisgs@gmail.com</p>
+            <p><strong>Email:</strong> admin@kokkalisgs.com</p>
             <p><strong>Phone:</strong> (617) 398-7045</p>
             <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/george-kokkalis-bb6406a8/">Click Here</a></p>
             <p><strong>Location:</strong> Boston, MA</p>
@@ -449,8 +509,12 @@
       </section>
     </main>
 
+    <!-- ===========================
+         Site Footer
+         =========================== -->
     <footer class="site-footer">
       <div class="container">
+        <!-- Client Logos -->
         <div class="footer-logos">
           <p class="footer-logos-title">Trusted by leading organizations:</p>
           <div class="logos-scroll-wrapper">
@@ -467,6 +531,8 @@
             </div>
           </div>
         </div>
+
+        <!-- Social Media Links -->
         <div class="footer-socials">
           <a href="https://www.linkedin.com/in/george-kokkalis-bb6406a8/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -494,17 +560,21 @@
             </svg>
           </a>
         </div>
+
+        <!-- Footer Navigation -->
         <div class="footer-inner">
           <p>© <span id="year"></span> Kokkalis Global Search — All rights reserved.</p>
           <nav class="footer-nav">
-            <a href="#privacy">Privacy</a>
-            <a href="#terms">Terms</a>
+            <a href="#privacy" id="privacy-link">Privacy</a>
+            <a href="#terms" id="terms-link">Terms</a>
           </nav>
         </div>
       </div>
     </footer>
 
-    <!-- Cookie Consent Banner -->
+    <!-- ===========================
+         Cookie Consent Banner
+         =========================== -->
     <div id="cookie-banner" class="cookie-banner">
       <div class="cookie-content">
         <p>We use cookies to improve your experience and analyze site traffic. By clicking "Accept", you consent to our use of cookies. <a href="#privacy">Learn more</a></p>
@@ -515,22 +585,28 @@
       </div>
     </div>
 
-    <!-- Scroll to Top Button -->
+    <!-- ===========================
+         Scroll to Top Button
+         =========================== -->
     <button id="scroll-to-top" class="scroll-to-top" aria-label="Scroll to top">↑</button>
 
-    <!-- JS -->
+    <!-- ===========================
+         JavaScript
+         =========================== -->
+    <!-- Main JS -->
     <script src="resources/main.js"></script>
 
-    <!--Start of Tawk.to Script-->
+    <!-- Tawk.to Live Chat -->
+    <!--Start of Tawk.to Script *default desktop widget 280x330px -->
     <script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/693a1c5e2a271419893a1472/1jc5ftks0';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function() {
+      var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+      s1.async = true;
+      s1.src = 'https://embed.tawk.to/693a1c5e2a271419893a1472/1jc5ftks0';
+      s1.charset = 'UTF-8';
+      s1.setAttribute('crossorigin', '*');
+      s0.parentNode.insertBefore(s1, s0);
     })();
     </script>
     <!--End of Tawk.to Script-->
