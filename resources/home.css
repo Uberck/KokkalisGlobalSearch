@@ -1010,14 +1010,12 @@ img {
   position: fixed;
   bottom: 150px;
   right: 30px;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   background: var(--accent);
   color: #fff;
   border: none;
   border-radius: 50%;
-  font-size: 24px;
-  font-weight: 700;
   cursor: pointer;
   opacity: 0;
   visibility: hidden;
@@ -1027,6 +1025,33 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0;
+}
+
+.scroll-to-top .progress-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: rotate(-90deg);
+  pointer-events: none;
+}
+
+.scroll-to-top .progress-ring-circle {
+  transition: stroke-dashoffset 0.1s linear;
+}
+
+.scroll-to-top .progress-ring-progress {
+  stroke-dasharray: 163.36;
+  stroke-dashoffset: 163.36;
+  transition: stroke-dashoffset 0.1s linear;
+  stroke-linecap: round;
+}
+
+.scroll-to-top .scroll-arrow {
+  position: relative;
+  z-index: 1;
+  font-size: 24px;
+  font-weight: 700;
 }
 
 .scroll-to-top.show {

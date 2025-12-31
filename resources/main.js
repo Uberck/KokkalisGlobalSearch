@@ -705,24 +705,49 @@
   /**
    * Initialize scroll to top button
    * Shows button when scrolling down, hides when at top
+   * Updates circular progress indicator based on scroll percentage
    */
   function initScrollToTop() {
     const scrollToTopBtn = document.getElementById('scroll-to-top');
     if (!scrollToTopBtn) return;
+
+    const progressCircle = scrollToTopBtn.querySelector('.progress-ring-progress');
+    const radius = 26; // Must match the 'r' attribute in the SVG circle
+    const circumference = 2 * Math.PI * radius; // ~163.36
 
     // Check if cookies already accepted and adjust position
     if (localStorage.getItem('cookiesAccepted') === 'true') {
       scrollToTopBtn.classList.add('cookie-accepted');
     }
 
-    // Show/hide button based on scroll position
-    window.addEventListener('scroll', () => {
-      if (window.pageYOffset > SCROLL_TO_TOP_THRESHOLD) {
+    /**
+     * Calculate and update scroll progress
+     */
+    function updateProgress() {
+      // Calculate scroll percentage
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrollPercentage = (scrollTop / scrollHeight) * 100;
+
+      // Update progress ring
+      if (progressCircle) {
+        const offset = circumference - (scrollPercentage / 100) * circumference;
+        progressCircle.style.strokeDashoffset = offset;
+      }
+
+      // Show/hide button based on scroll position
+      if (scrollTop > SCROLL_TO_TOP_THRESHOLD) {
         scrollToTopBtn.classList.add('show');
       } else {
         scrollToTopBtn.classList.remove('show');
       }
-    });
+    }
+
+    // Update progress on scroll
+    window.addEventListener('scroll', updateProgress);
+
+    // Initial update
+    updateProgress();
 
     // Scroll to top when button is clicked
     scrollToTopBtn.addEventListener('click', () => {

@@ -588,7 +588,13 @@
     <!-- ===========================
          Scroll to Top Button
          =========================== -->
-    <button id="scroll-to-top" class="scroll-to-top" aria-label="Scroll to top">↑</button>
+    <button id="scroll-to-top" class="scroll-to-top" aria-label="Scroll to top">
+      <svg class="progress-ring" width="60" height="60">
+        <circle class="progress-ring-circle" stroke="rgba(255, 255, 255, 0.3)" stroke-width="3" fill="transparent" r="26" cx="30" cy="30"/>
+        <circle class="progress-ring-progress" stroke="#fff" stroke-width="3" fill="transparent" r="26" cx="30" cy="30"/>
+      </svg>
+      <span class="scroll-arrow">↑</span>
+    </button>
 
     <!-- ===========================
          JavaScript
