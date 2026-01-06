@@ -12,6 +12,20 @@
     <meta name="author" content="Kokkalis Global Search" />
 
     <!-- ===========================
+         Security Headers
+         =========================== -->
+    <!-- Prevent MIME type sniffing -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <!-- Prevent clickjacking attacks -->
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <!-- Control referrer information -->
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+    <!-- Disable unnecessary browser features -->
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()" />
+    <!-- Content Security Policy - Allow only trusted sources -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://embed.tawk.to https://va.tawk.to; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:; media-src 'self'; connect-src 'self' https://www.google-analytics.com https://api.web3forms.com https://va.tawk.to; frame-src https://embed.tawk.to; object-src 'none'; base-uri 'self'; form-action 'self' https://www.google.com https://api.web3forms.com;" />
+
+    <!-- ===========================
          Open Graph / Social Media
          =========================== -->
     <!-- Open Graph / Facebook / LinkedIn -->
@@ -486,13 +500,13 @@
 
               <input type="text" name="company" placeholder="Company" />
 
-              <select name="interest">
+              <select name="interest" id="interest-select">
                 <option>Hiring</option>
                 <option>Applying for a role</option>
                 <option>General inquiry</option>
               </select>
 
-              <textarea name="message" rows="5" placeholder="Tell us about the role or your question..." required></textarea>
+              <textarea name="message" id="message-textarea" rows="5" placeholder="Tell us about the role or your question..." required></textarea>
 
               <button class="button button-primary" type="submit">Send message</button>
             </form>
@@ -577,7 +591,7 @@
          =========================== -->
     <div id="cookie-banner" class="cookie-banner">
       <div class="cookie-content">
-        <p>We use cookies to improve your experience and analyze site traffic. By clicking "Accept", you consent to our use of cookies. <a href="#privacy">Learn more</a></p>
+        <p>We use cookies to improve your experience and analyze site traffic. By clicking "Accept", you consent to our use of cookies. <a href="#privacy" id="cookie-privacy-link">Learn more</a></p>
         <div class="cookie-buttons">
           <button id="cookie-accept" class="cookie-btn">Accept</button>
           <button id="cookie-decline" class="cookie-btn cookie-btn-outline">Decline</button>

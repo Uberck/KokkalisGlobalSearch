@@ -20,12 +20,59 @@
   // ===========================
   // Configuration & Constants
   // ===========================
-  const JOBS_PER_PAGE = 4;
-  const COOKIE_BANNER_DELAY = 1000; // ms
-  const SCROLL_TO_TOP_THRESHOLD = 300; // pixels
+  const JOBS_PER_PAGE = 4; // Number of job listings displayed per page
+  const COOKIE_BANNER_DELAY = 1000; // Delay before showing cookie banner (milliseconds)
+  const SCROLL_TO_TOP_THRESHOLD = 300; // Scroll distance before showing back-to-top button (pixels)
 
-  // Check for reduced motion preference
+  // Check for reduced motion preference for accessibility
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+
+  // ===========================
+  // Safe localStorage Utilities
+  // ===========================
+
+  /**
+   * Safely get item from localStorage with error handling
+   * Protects against localStorage access failures in private browsing mode or when quota is exceeded
+   * @param {string} key - The localStorage key to retrieve
+   * @returns {string|null} - The value or null if not found or on error
+   */
+  function safeGetLocalStorage(key) {
+    try {
+      return localStorage.getItem(key);
+    } catch (e) {
+      console.warn('localStorage access failed:', e);
+      return null;
+    }
+  }
+
+  /**
+   * Safely set item in localStorage with error handling
+   * Protects against quota exceeded errors and access restrictions
+   * @param {string} key - The localStorage key to set
+   * @param {string} value - The value to store
+   * @returns {boolean} - True if successful, false otherwise
+   */
+  function safeSetLocalStorage(key, value) {
+    try {
+      localStorage.setItem(key, value);
+      return true;
+    } catch (e) {
+      console.warn('localStorage write failed (quota exceeded or restricted access):', e);
+      return false;
+    }
+  }
+
+  /**
+   * Basic HTML sanitization for innerHTML operations
+   * Removes script tags as an extra safety measure for trusted content
+   * @param {string} html - HTML string to sanitize
+   * @returns {string} - Sanitized HTML with script tags removed
+   */
+  function sanitizeHTML(html) {
+    return html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+  }
 
 
   // ===========================
@@ -33,7 +80,9 @@
   // ===========================
 
   /**
-   * Toggle mobile menu open/closed
+   * Initialize mobile hamburger menu functionality
+   * Handles opening/closing the navigation menu on mobile devices (<700px width)
+   * Menu auto-closes when navigation links are clicked to improve UX
    */
   function initMobileMenu() {
     const menuToggle = document.getElementById('menu-toggle');
@@ -41,12 +90,13 @@
 
     if (!menuToggle || !mainNav) return;
 
-    // Toggle menu on button click
+    // Toggle menu on hamburger button click (adds/removes 'open' class)
     menuToggle.addEventListener('click', () => {
       mainNav.classList.toggle('open');
     });
 
     // Close menu when clicking on navigation links (mobile only)
+    // This prevents users from having to manually close the menu after selecting a section
     document.querySelectorAll('#main-nav a').forEach(link => {
       link.addEventListener('click', () => {
         if (window.innerWidth <= 700 && mainNav.classList.contains('open')) {
@@ -62,23 +112,24 @@
   // ===========================
 
   /**
-   * Enable smooth scrolling for anchor links
-   * Respects user's reduced motion preference
+   * Enable smooth scrolling for anchor links (e.g., #about, #services)
+   * Respects user's reduced motion preference for accessibility (WCAG 2.1)
+   * Uses native scrollIntoView API for optimal performance
    */
   function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', (e) => {
         const href = anchor.getAttribute('href');
 
-        // Only handle internal anchor links (not just "#")
+        // Only handle internal anchor links with actual targets (not just "#")
         if (href.length > 1) {
           e.preventDefault();
           const targetElement = document.querySelector(href);
 
           if (targetElement) {
             targetElement.scrollIntoView({
-              behavior: prefersReducedMotion ? 'auto' : 'smooth',
-              block: 'start'
+              behavior: prefersReducedMotion ? 'auto' : 'smooth', // Instant scroll if user prefers reduced motion
+              block: 'start' // Align element to top of viewport
             });
           }
         }
@@ -108,6 +159,8 @@
 
   /**
    * Validate Google search form before submission
+   * Prevents submitting empty searches and provides user feedback
+   * Form submits to Google.com with site:kokkalisgs.com parameter
    */
   function initGoogleSearch() {
     const googleSearchForm = document.getElementById('google-search-form');
@@ -118,11 +171,13 @@
     googleSearchForm.addEventListener('submit', function(e) {
       const searchTerm = googleSearchInput.value.trim();
 
+      // Validate that search term is not empty
       if (searchTerm === '') {
         e.preventDefault();
         alert('Please enter a search term before searching.');
         googleSearchInput.focus();
       }
+      // If valid, form will submit normally to Google with the search query
     });
   }
 
@@ -149,7 +204,7 @@
 
   /**
    * Initialize dark mode toggle functionality
-   * Saves preference to localStorage
+   * Saves user preference to localStorage for persistence across sessions
    */
   function initDarkMode() {
     const darkModeToggle = document.getElementById('dark-mode-toggle');
@@ -157,8 +212,8 @@
 
     if (!darkModeToggle) return;
 
-    // Check for saved dark mode preference
-    if (localStorage.getItem('darkMode') === 'enabled') {
+    // Check for saved dark mode preference using safe localStorage access
+    if (safeGetLocalStorage('darkMode') === 'enabled') {
       body.classList.add('dark-mode');
     }
     updateDarkModeTooltip();
@@ -168,11 +223,11 @@
       body.classList.toggle('dark-mode');
       updateDarkModeTooltip();
 
-      // Save preference to localStorage
+      // Save preference to localStorage using safe wrapper
       if (body.classList.contains('dark-mode')) {
-        localStorage.setItem('darkMode', 'enabled');
+        safeSetLocalStorage('darkMode', 'enabled');
       } else {
-        localStorage.setItem('darkMode', 'disabled');
+        safeSetLocalStorage('darkMode', 'disabled');
       }
     });
   }
@@ -185,6 +240,7 @@
   /**
    * Initialize cookie consent banner
    * Shows banner if user hasn't made a choice yet
+   * Complies with privacy regulations by requiring explicit consent
    */
   function initCookieConsent() {
     const cookieBanner = document.getElementById('cookie-banner');
@@ -193,17 +249,17 @@
 
     if (!cookieBanner || !cookieAccept || !cookieDecline) return;
 
-    // Check if user has already accepted cookies
-    if (!localStorage.getItem('cookiesAccepted')) {
-      // Show banner after a short delay
+    // Check if user has already accepted cookies using safe localStorage access
+    if (!safeGetLocalStorage('cookiesAccepted')) {
+      // Show banner after a short delay to avoid interrupting initial page load
       setTimeout(() => {
         cookieBanner.classList.add('show');
       }, COOKIE_BANNER_DELAY);
     }
 
-    // Handle accept button click
+    // Handle accept button click - save preference and hide banner
     cookieAccept.addEventListener('click', () => {
-      localStorage.setItem('cookiesAccepted', 'true');
+      safeSetLocalStorage('cookiesAccepted', 'true');
       cookieBanner.classList.remove('show');
 
       // Adjust scroll to top button position
@@ -462,7 +518,9 @@
 
   /**
    * Initialize service modal functionality
-   * Opens modal when clicking "Learn More" buttons
+   * Opens modal when clicking "Learn More" buttons on service cards
+   * Also handles Privacy Policy and Terms of Service modals
+   * Modal content is mapped via data-service attribute (executive, permanent, contract, advisory)
    */
   function initServiceModal() {
     const modal = document.getElementById('service-modal');
@@ -478,43 +536,48 @@
 
       if (learnMoreBtn) {
         learnMoreBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const serviceType = card.getAttribute('data-service');
+          e.stopPropagation(); // Prevent event bubbling to parent elements
+          const serviceType = card.getAttribute('data-service'); // e.g., 'executive', 'permanent'
           const details = serviceDetails[serviceType];
 
           if (details) {
             modalTitle.textContent = details.title;
-            modalBody.innerHTML = details.content;
+            // Sanitize HTML content before rendering (removes script tags for security)
+            modalBody.innerHTML = sanitizeHTML(details.content);
             modal.classList.add('show');
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling while modal is open
           }
         });
       }
     });
 
-    // Close modal when clicking close button
+    // Close modal when clicking the X button
     closeBtn.addEventListener('click', closeModal);
 
-    // Close modal when clicking outside content area
+    // Close modal when clicking outside the content area (on the backdrop)
     window.addEventListener('click', (e) => {
       if (e.target === modal) {
         closeModal();
       }
     });
 
-    // Close modal on Escape key press
+    // Close modal on Escape key press (accessibility feature)
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && modal.classList.contains('show')) {
         closeModal();
       }
     });
 
+    /**
+     * Close the modal and restore page scrolling
+     * Three ways to close: X button, outside click, or ESC key
+     */
     function closeModal() {
       modal.classList.remove('show');
       document.body.style.overflow = ''; // Restore scrolling
     }
 
-    // Privacy and Terms links
+    // Privacy Policy link in footer
     const privacyLink = document.getElementById('privacy-link');
     const termsLink = document.getElementById('terms-link');
 
@@ -523,18 +586,32 @@
         e.preventDefault();
         const details = legalContent.privacy;
         modalTitle.textContent = details.title;
-        modalBody.innerHTML = details.content;
+        modalBody.innerHTML = sanitizeHTML(details.content); // Sanitize for security
         modal.classList.add('show');
         document.body.style.overflow = 'hidden';
       });
     }
 
+    // Terms of Service link in footer
     if (termsLink) {
       termsLink.addEventListener('click', (e) => {
         e.preventDefault();
         const details = legalContent.terms;
         modalTitle.textContent = details.title;
-        modalBody.innerHTML = details.content;
+        modalBody.innerHTML = sanitizeHTML(details.content); // Sanitize for security
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+      });
+    }
+
+    // Privacy policy link in cookie consent banner
+    const cookiePrivacyLink = document.getElementById('cookie-privacy-link');
+    if (cookiePrivacyLink) {
+      cookiePrivacyLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        const details = legalContent.privacy;
+        modalTitle.textContent = details.title;
+        modalBody.innerHTML = sanitizeHTML(details.content); // Sanitize for security
         modal.classList.add('show');
         document.body.style.overflow = 'hidden';
       });
@@ -547,7 +624,15 @@
   // ===========================
 
   /**
-   * Job pagination state
+   * Job pagination state management
+   *
+   * State variables:
+   * - currentPage: Current page number being displayed (1-indexed)
+   * - allJobs: Array of all job DOM elements from the page
+   * - filteredJobs: Subset of allJobs based on current filter selection
+   *
+   * Jobs are filtered by data-role attribute on each .job-row element
+   * Valid roles: 'engineering', 'product', 'sales', 'executive'
    */
   let currentPage = 1;
   let allJobs = [];
@@ -555,19 +640,26 @@
 
   /**
    * Initialize job list array from DOM
+   * Converts NodeList to array for easier manipulation
+   * Sets initial state with all jobs visible (no filter applied)
    */
   function initJobs() {
     const jobList = document.getElementById('job-list');
     if (!jobList) return;
 
     allJobs = Array.from(jobList.querySelectorAll('.job-row'));
-    filteredJobs = [...allJobs];
-    showPage(1);
+    filteredJobs = [...allJobs]; // Start with all jobs visible
+    showPage(1); // Display first page
   }
 
   /**
    * Display jobs for a specific page
-   * @param {number} page - Page number to display
+   * Implements pagination logic:
+   * 1. Hide all job rows
+   * 2. Show only jobs for current page (JOBS_PER_PAGE items)
+   * 3. Update pagination controls (prev/next buttons, page indicator)
+   *
+   * @param {number} page - Page number to display (1-indexed)
    */
   function showPage(page) {
     const jobList = document.getElementById('job-list');
@@ -580,24 +672,30 @@
     currentPage = page;
     const totalPages = Math.ceil(filteredJobs.length / JOBS_PER_PAGE);
 
-    // Hide all jobs first
+    // Hide all jobs first to reset display state
     allJobs.forEach(job => job.style.display = 'none');
 
-    // Show only jobs for current page
+    // Calculate which jobs to show based on current page
+    // Example: Page 2 with 4 jobs/page shows jobs 4-7 (indices 4-8)
     const start = (page - 1) * JOBS_PER_PAGE;
     const end = start + JOBS_PER_PAGE;
     const jobsToShow = filteredJobs.slice(start, end);
 
+    // Show jobs for current page
     jobsToShow.forEach(job => job.style.display = '');
 
-    // Update pagination controls
+    // Update pagination UI
     pageInfo.textContent = `Page ${page} of ${totalPages}`;
-    prevBtn.disabled = page === 1;
-    nextBtn.disabled = page >= totalPages;
+    prevBtn.disabled = page === 1; // Disable prev on first page
+    nextBtn.disabled = page >= totalPages; // Disable next on last page
   }
 
   /**
    * Filter jobs by role category
+   * Filters based on data-role attribute on job elements
+   * Resets to page 1 after filtering to avoid showing empty pages
+   *
+   * Filter options: 'all', 'engineering', 'product', 'sales', 'executive'
    */
   function filterJobs() {
     const filter = document.getElementById('filter-role');
@@ -606,16 +704,20 @@
     const val = filter.value;
 
     if (val === 'all') {
+      // Show all jobs when 'all' is selected
       filteredJobs = [...allJobs];
     } else {
+      // Filter jobs by matching data-role attribute
       filteredJobs = allJobs.filter(job => job.getAttribute('data-role') === val);
     }
 
-    showPage(1); // Reset to first page when filtering
+    showPage(1); // Reset to first page when filter changes
   }
 
   /**
-   * Initialize job pagination and filtering
+   * Initialize job pagination and filtering controls
+   * Sets up event listeners for pagination buttons and filter dropdown
+   * Note: Jobs are currently hardcoded in HTML, but architecture supports future Airtable API integration
    */
   function initJobPagination() {
     const jobList = document.getElementById('job-list');
@@ -625,16 +727,16 @@
 
     if (!jobList || !prevBtn || !nextBtn) return;
 
-    initJobs();
+    initJobs(); // Load initial job state
 
-    // Previous page button
+    // Previous page button - go back one page
     prevBtn.addEventListener('click', () => {
       if (currentPage > 1) {
         showPage(currentPage - 1);
       }
     });
 
-    // Next page button
+    // Next page button - advance one page
     nextBtn.addEventListener('click', () => {
       const totalPages = Math.ceil(filteredJobs.length / JOBS_PER_PAGE);
       if (currentPage < totalPages) {
@@ -642,7 +744,7 @@
       }
     });
 
-    // Filter dropdown
+    // Filter dropdown - filter jobs by role category
     if (filter) {
       filter.addEventListener('change', filterJobs);
     }
@@ -655,24 +757,56 @@
 
   /**
    * Handle contact form submission
-   * Uses Web3Forms API for form handling
+   * Features:
+   * - Dynamic placeholder text based on inquiry type (Hiring, Applying, General inquiry)
+   * - Web3Forms API for serverless form processing (no backend required)
+   * - Client-side validation via HTML5 attributes (required, email type, etc.)
+   * - User feedback during submission (button state changes, success/error alerts)
+   *
+   * Form data sent to: https://api.web3forms.com/submit
+   * Access key configured in HTML hidden input field
    */
   function initContactForm() {
     const form = document.getElementById('contact-form');
     if (!form) return;
 
+    // Dynamic placeholder text based on dropdown selection
+    const interestSelect = document.getElementById('interest-select');
+    const messageTextarea = document.getElementById('message-textarea');
+
+    // Map inquiry types to contextual placeholder text
+    const placeholderMap = {
+      'Hiring': 'Tell us about the role you\'re hiring for...',
+      'Applying for a role': 'Tell us about your background and which role interests you...',
+      'General inquiry': 'Tell us more about your question...'
+    };
+
+    // Update placeholder dynamically when user changes inquiry type
+    if (interestSelect && messageTextarea) {
+      interestSelect.addEventListener('change', (e) => {
+        const selectedValue = e.target.value;
+        messageTextarea.placeholder = placeholderMap[selectedValue] || 'Tell us about the role or your question...';
+      });
+
+      // Set initial placeholder based on default selection (Hiring)
+      const initialValue = interestSelect.value;
+      messageTextarea.placeholder = placeholderMap[initialValue] || 'Tell us about the role or your question...';
+    }
+
+    // Handle form submission via fetch API
     form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+      e.preventDefault(); // Prevent default form submission
 
       const formData = new FormData(form);
       const button = form.querySelector('button[type="submit"]');
       const originalText = button.textContent;
 
-      // Update button state
+      // Update button state to show submission in progress
       button.textContent = 'Sending...';
       button.disabled = true;
 
       try {
+        // Submit to Web3Forms API
         const response = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
           body: formData
@@ -681,17 +815,20 @@
         const data = await response.json();
 
         if (data.success) {
+          // Success - show confirmation and reset form
           alert('Thanks! We received your message and will get back to you within 1 business day.');
           form.reset();
         } else {
+          // API returned error
           alert('Oops! Something went wrong. Please email us directly at admin@kokkalisgs.com');
         }
       } catch (error) {
+        // Network error or API unavailable
         console.error('Form submission error:', error);
         alert('Oops! Something went wrong. Please email us directly at admin@kokkalisgs.com');
       }
 
-      // Restore button state
+      // Restore button to original state
       button.textContent = originalText;
       button.disabled = false;
     });
@@ -703,25 +840,42 @@
   // ===========================
 
   /**
-   * Initialize scroll to top button
-   * Shows button when scrolling down, hides when at top
-   * Updates circular progress indicator based on scroll percentage
+   * Initialize scroll to top button with circular progress indicator
+   *
+   * Features:
+   * - Shows button after scrolling down 300px (SCROLL_TO_TOP_THRESHOLD)
+   * - Circular progress ring fills as user scrolls down the page
+   * - Smooth scroll back to top on click (respects reduced motion preference)
+   * - Position adjusts based on cookie banner visibility
+   *
+   * Technical details:
+   * - Uses SVG circle with stroke-dashoffset for progress animation
+   * - Progress calculated as: (scrollTop / maxScrollHeight) * 100
+   * - Button positioned fixed at bottom-right of viewport
    */
   function initScrollToTop() {
     const scrollToTopBtn = document.getElementById('scroll-to-top');
     if (!scrollToTopBtn) return;
 
     const progressCircle = scrollToTopBtn.querySelector('.progress-ring-progress');
-    const radius = 26; // Must match the 'r' attribute in the SVG circle
-    const circumference = 2 * Math.PI * radius; // ~163.36
+    const radius = 26; // Must match the 'r' attribute in the SVG circle element
+    const circumference = 2 * Math.PI * radius; // Circle circumference ≈ 163.36 pixels
 
-    // Check if cookies already accepted and adjust position
-    if (localStorage.getItem('cookiesAccepted') === 'true') {
+    // Check if cookies already accepted and adjust button position accordingly
+    // (Cookie banner affects bottom positioning of scroll button)
+    if (safeGetLocalStorage('cookiesAccepted') === 'true') {
       scrollToTopBtn.classList.add('cookie-accepted');
     }
 
     /**
-     * Calculate and update scroll progress
+     * Calculate and update scroll progress indicator
+     * Called on every scroll event to update the progress ring
+     *
+     * Progress calculation:
+     * 1. Get current scroll position (scrollTop)
+     * 2. Calculate total scrollable height (scrollHeight - clientHeight)
+     * 3. Calculate percentage scrolled
+     * 4. Convert percentage to stroke-dashoffset for SVG circle
      */
     function updateProgress() {
       // Calculate scroll percentage
@@ -729,13 +883,14 @@
       const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
       const scrollPercentage = (scrollTop / scrollHeight) * 100;
 
-      // Update progress ring
+      // Update progress ring using stroke-dashoffset
+      // As user scrolls, offset decreases, revealing more of the circle
       if (progressCircle) {
         const offset = circumference - (scrollPercentage / 100) * circumference;
         progressCircle.style.strokeDashoffset = offset;
       }
 
-      // Show/hide button based on scroll position
+      // Show button when scrolled past threshold, hide when near top
       if (scrollTop > SCROLL_TO_TOP_THRESHOLD) {
         scrollToTopBtn.classList.add('show');
       } else {
@@ -743,17 +898,17 @@
       }
     }
 
-    // Update progress on scroll
+    // Update progress on scroll event
     window.addEventListener('scroll', updateProgress);
 
-    // Initial update
+    // Initial update on page load
     updateProgress();
 
     // Scroll to top when button is clicked
     scrollToTopBtn.addEventListener('click', () => {
       window.scrollTo({
         top: 0,
-        behavior: prefersReducedMotion ? 'auto' : 'smooth'
+        behavior: prefersReducedMotion ? 'auto' : 'smooth' // Instant scroll for users who prefer reduced motion
       });
     });
   }
@@ -764,31 +919,43 @@
   // ===========================
 
   /**
-   * Initialize all functionality when DOM is ready
+   * Main initialization function
+   * Called immediately when DOM is ready (wrapped in IIFE)
+   *
+   * Initialization order:
+   * 1. Navigation - Mobile menu, smooth scrolling
+   * 2. UI Features - Footer year, Google search, dark mode, cookies, modals
+   * 3. Job Features - Pagination and filtering
+   * 4. Forms - Contact form with dynamic placeholders
+   * 5. Scroll Features - Back-to-top button with progress indicator
+   *
+   * All functions use early returns if required DOM elements are missing,
+   * preventing errors if HTML structure changes
    */
   function init() {
     // Navigation
-    initMobileMenu();
-    initSmoothScroll();
+    initMobileMenu();        // Hamburger menu toggle
+    initSmoothScroll();      // Anchor link smooth scrolling
 
     // UI Features
-    setFooterYear();
-    initGoogleSearch();
-    initDarkMode();
-    initCookieConsent();
-    initServiceModal();
+    setFooterYear();         // Dynamic copyright year
+    initGoogleSearch();      // Search form validation
+    initDarkMode();          // Dark/light theme toggle
+    initCookieConsent();     // Cookie consent banner
+    initServiceModal();      // Service details & legal modals
 
     // Job Features
-    initJobPagination();
+    initJobPagination();     // Job listing pagination & filtering
 
     // Forms
-    initContactForm();
+    initContactForm();       // Contact form submission
 
     // Scroll Features
-    initScrollToTop();
+    initScrollToTop();       // Back-to-top button with progress
   }
 
-  // Run initialization
+  // Run initialization when script loads
+  // IIFE ensures code runs immediately and variables stay private
   init();
 
 })();
