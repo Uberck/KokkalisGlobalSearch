@@ -915,6 +915,50 @@
 
 
   // ===========================
+  // Header Scroll Behavior
+  // ===========================
+
+  /**
+   * Initialize smooth header show/hide on scroll
+   * Features:
+   * - Hides header smoothly when scrolling down
+   * - Shows header smoothly when scrolling up
+   * - Prevents jitter with scroll threshold
+   */
+  function initHeaderScroll() {
+    const header = document.querySelector('.site-header');
+    if (!header) return;
+
+    let lastScrollTop = 0;
+    const scrollThreshold = 5; // Minimum scroll distance to trigger hide/show
+
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+      // Ignore small scroll movements to prevent jitter
+      if (Math.abs(currentScroll - lastScrollTop) < scrollThreshold) {
+        return;
+      }
+
+      // Always show header when near the top of the page
+      if (currentScroll <= 100) {
+        header.classList.remove('header-hidden');
+      }
+      // Hide header when scrolling down
+      else if (currentScroll > lastScrollTop && !header.classList.contains('header-hidden')) {
+        header.classList.add('header-hidden');
+      }
+      // Show header when scrolling up
+      else if (currentScroll < lastScrollTop && header.classList.contains('header-hidden')) {
+        header.classList.remove('header-hidden');
+      }
+
+      lastScrollTop = currentScroll;
+    });
+  }
+
+
+  // ===========================
   // Initialize All Features
   // ===========================
 
@@ -923,7 +967,7 @@
    * Called immediately when DOM is ready (wrapped in IIFE)
    *
    * Initialization order:
-   * 1. Navigation - Mobile menu, smooth scrolling
+   * 1. Navigation - Mobile menu, smooth scrolling, header scroll behavior
    * 2. UI Features - Footer year, Google search, dark mode, cookies, modals
    * 3. Job Features - Pagination and filtering
    * 4. Forms - Contact form with dynamic placeholders
@@ -936,6 +980,7 @@
     // Navigation
     initMobileMenu();        // Hamburger menu toggle
     initSmoothScroll();      // Anchor link smooth scrolling
+    initHeaderScroll();      // Smooth header show/hide on scroll
 
     // UI Features
     setFooterYear();         // Dynamic copyright year
