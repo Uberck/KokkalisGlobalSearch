@@ -16,14 +16,12 @@
          =========================== -->
     <!-- Prevent MIME type sniffing -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-    <!-- Prevent clickjacking attacks -->
-    <meta http-equiv="X-Frame-Options" content="DENY" />
     <!-- Control referrer information -->
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
     <!-- Disable unnecessary browser features -->
     <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()" />
     <!-- Content Security Policy - Allow only trusted sources -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://embed.tawk.to https://va.tawk.to; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:; media-src 'self'; connect-src 'self' https://www.google-analytics.com https://api.web3forms.com https://va.tawk.to; frame-src https://embed.tawk.to; object-src 'none'; base-uri 'self'; form-action 'self' https://www.google.com https://api.web3forms.com;" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://*.tawk.to; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.tawk.to; font-src 'self' https://fonts.gstatic.com https://*.tawk.to data:; img-src 'self' https: data: blob:; media-src 'self'; connect-src 'self' https://www.google-analytics.com https://api.web3forms.com https://*.tawk.to wss://*.tawk.to; frame-src https://*.tawk.to; child-src https://*.tawk.to blob:; worker-src blob:; object-src 'none'; base-uri 'self'; form-action 'self' https://www.google.com https://api.web3forms.com;" />
 
     <!-- ===========================
          Open Graph / Social Media
@@ -613,22 +611,67 @@
     <!-- ===========================
          JavaScript
          =========================== -->
-    <!-- Main JS -->
-    <script src="resources/main.js"></script>
+    <!-- Debug script to monitor tawk.to loading -->
+    <script type="text/javascript">
+    console.log('=== TAWK DEBUG START ===');
+    console.log('Document ready state:', document.readyState);
+    console.log('HEAD element exists:', !!document.head);
+    
+    // Monitor when tawk.to scripts load
+    var originalCreateElement = document.createElement;
+    document.createElement = function(tagName) {
+      var element = originalCreateElement.call(document, tagName);
+      if (tagName === 'script' && element.src && element.src.includes('tawk')) {
+        console.log('Tawk script created:', element.src);
+      }
+      return element;
+    };
+    </script>
 
-    <!-- Tawk.to Live Chat -->
+    <!-- Tawk.to Live Chat - Load BEFORE main.js -->
     <!--Start of Tawk.to Script *default desktop widget 280x330px -->
     <script type="text/javascript">
-    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    console.log('Tawk init script executing...');
+    // Initialize tawk.to API
+    window.Tawk_API = window.Tawk_API || {};
+    window.Tawk_LoadStart = new Date();
+    console.log('Tawk_API initialized');
+    
     (function() {
-      var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+      console.log('Tawk IIFE starting...');
+      var s1 = document.createElement('script');
       s1.async = true;
       s1.src = 'https://embed.tawk.to/693a1c5e2a271419893a1472/1jc5ftks0';
       s1.charset = 'UTF-8';
       s1.setAttribute('crossorigin', '*');
-      s0.parentNode.insertBefore(s1, s0);
+      s1.onload = function() {
+        console.log('Tawk script loaded successfully');
+      };
+      s1.onerror = function() {
+        console.error('Tawk script failed to load');
+      };
+      document.head.appendChild(s1);
+      console.log('Tawk script appended to head');
     })();
+    
+    // Monitor for tawk.to widget appearance
+    setTimeout(function() {
+      var tawkContainer = document.getElementById('tawkchat-container');
+      var tawkIframe = document.querySelector('iframe[src*="tawk.to"]');
+      console.log('Tawk container found:', !!tawkContainer);
+      console.log('Tawk iframe found:', !!tawkIframe);
+      if (tawkIframe) {
+        console.log('Tawk iframe display:', tawkIframe.style.display);
+        console.log('Tawk iframe visibility:', tawkIframe.style.visibility);
+        console.log('Tawk iframe opacity:', tawkIframe.style.opacity);
+      }
+    }, 2000);
+    
+    console.log('=== TAWK DEBUG END ===');
     </script>
     <!--End of Tawk.to Script-->
+
+    <!-- Main JS -->
+    <script src="resources/main.js"></script>
   </body>
 </html>

@@ -278,6 +278,22 @@
     cookieDecline.addEventListener('click', () => {
       window.location.href = 'https://www.google.com';
     });
+
+    // Debug: Check if tawk.to is loading
+    console.log('Cookie consent initialized. Checking for tawk.to widget...');
+    setTimeout(() => {
+      const tawkContainer = document.getElementById('tawkchat-container');
+      const tawkIframe = document.querySelector('iframe[src*="tawk.to"]');
+      console.log('Tawk container found:', !!tawkContainer);
+      console.log('Tawk iframe found:', !!tawkIframe);
+      if (tawkIframe) {
+        console.log('Tawk iframe styles:', {
+          display: tawkIframe.style.display,
+          visibility: tawkIframe.style.visibility,
+          zIndex: tawkIframe.style.zIndex
+        });
+      }
+    }, 3000);
   }
 
 
