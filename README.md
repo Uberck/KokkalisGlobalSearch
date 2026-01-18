@@ -151,4 +151,4 @@ The website is architected to support dynamic job listings via Airtable API:
 
 ## 📝 License
 
-© 2025 Kokkalis Global Search — All rights reserved
+© 2026 Kokkalis Global Search — All rights reserved
