@@ -158,9 +158,8 @@
   // ===========================
 
   /**
-   * Validate Google search form before submission
-   * Prevents submitting empty searches and provides user feedback
-   * Form submits to Google.com with site:kokkalisgs.com parameter
+   * Initialize search form
+   * Searches both the site and Google by prepending site:kokkalisgs.com to the query
    */
   function initGoogleSearch() {
     const googleSearchForm = document.getElementById('google-search-form');
@@ -176,8 +175,11 @@
         e.preventDefault();
         alert('Please enter a search term before searching.');
         googleSearchInput.focus();
+        return;
       }
-      // If valid, form will submit normally to Google with the search query
+
+      // Prepend site: operator to search both site and Google
+      googleSearchInput.value = 'site:kokkalisgs.com ' + searchTerm;
     });
   }
 
